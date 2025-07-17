@@ -3,7 +3,7 @@
 # Window settings
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
-WINDOW_TITLE = "Dog Game"
+WINDOW_TITLE = "Weird Dog"
 
 # Colors
 WHITE = (255, 255, 255)
