@@ -14,6 +14,8 @@ class Player:
         self.sit_flipped_image = None
         self.christmas_image = None
         self.christmas_flipped_image = None
+        self.christmas_eat_image = None
+        self.christmas_eat_flipped_image = None
         self.sign_image = None
         self.sign_flipped_image = None
         self.width = FALLBACK_PLAYER_SIZE
@@ -53,15 +55,6 @@ class Player:
             except pygame.error:
                 self.eat_image = None
                 self.eat_flipped_image = None
-            # Load and scale the sitting image
-            try:
-                sit_image = pygame.image.load("dog_sit.png")
-                sit_image = pygame.transform.scale(sit_image, (self.width, self.height))
-                self.sit_image = sit_image
-                self.sit_flipped_image = pygame.transform.flip(sit_image, True, False)
-            except pygame.error:
-                self.sit_image = None
-                self.sit_flipped_image = None
             # Load and scale the Christmas image
             try:
                 christmas_image = pygame.image.load("dog_christmas.png")
@@ -71,6 +64,24 @@ class Player:
             except pygame.error:
                 self.christmas_image = None
                 self.christmas_flipped_image = None
+            # Load and scale the Christmas eating image
+            try:
+                christmas_eat_image = pygame.image.load("dog_eats_christmas.png")
+                christmas_eat_image = pygame.transform.scale(christmas_eat_image, (self.width, self.height))
+                self.christmas_eat_image = christmas_eat_image
+                self.christmas_eat_flipped_image = pygame.transform.flip(christmas_eat_image, True, False)
+            except pygame.error:
+                self.christmas_eat_image = None
+                self.christmas_eat_flipped_image = None
+            # Load and scale the sitting image
+            try:
+                sit_image = pygame.image.load("dog_sit.png")
+                sit_image = pygame.transform.scale(sit_image, (self.width, self.height))
+                self.sit_image = sit_image
+                self.sit_flipped_image = pygame.transform.flip(sit_image, True, False)
+            except pygame.error:
+                self.sit_image = None
+                self.sit_flipped_image = None
             # Load and scale the sign image
             try:
                 sign_image = pygame.image.load("dog_sign.png")
@@ -88,10 +99,12 @@ class Player:
             self.flipped_image = None
             self.eat_image = None
             self.eat_flipped_image = None
-            self.sit_image = None
-            self.sit_flipped_image = None
             self.christmas_image = None
             self.christmas_flipped_image = None
+            self.christmas_eat_image = None
+            self.christmas_eat_flipped_image = None
+            self.sit_image = None
+            self.sit_flipped_image = None
             self.sign_image = None
             self.sign_flipped_image = None
             self.width = FALLBACK_PLAYER_SIZE
@@ -201,9 +214,14 @@ class Player:
         if self.sitting and self.sit_image and self.sit_flipped_image:
             img = self.sit_image
             img_flipped = self.sit_flipped_image
-        elif self.eating and self.eat_image and self.eat_flipped_image:
-            img = self.eat_image
-            img_flipped = self.eat_flipped_image
+        elif self.eating:
+            # Use Christmas eating image if in Christmas mode and available
+            if self.christmas_mode and self.christmas_eat_image and self.christmas_eat_flipped_image:
+                img = self.christmas_eat_image
+                img_flipped = self.christmas_eat_flipped_image
+            elif self.eat_image and self.eat_flipped_image:
+                img = self.eat_image
+                img_flipped = self.eat_flipped_image
         elif self.sign_mode and self.sign_image and self.sign_flipped_image:
             img = self.sign_image
             img_flipped = self.sign_flipped_image
